@@ -6,20 +6,52 @@
 # == Parameters
 #
 # Module specific parameters
-#  [*stomp_host*]
-#    Address or hostname of the stomp server (Active/RabbitMQ server)
-#    If set a default configfile is provided which uses the stomp
-#    parameters below. (Note: the default template is overriden if you
-#    set a custom $source or $template)
+# [*stomp_host*]
+#   Address or hostname of the stomp server (Active/RabbitMQ server)
+#   If set a default configfile is provided which uses the stomp
+#   parameters below. (Note: the default template is overriden if you
+#   set a custom $source or $template)
 #
-#  [*stomp_port*]
-#    The port to use for stomp communications
+# [*stomp_port*]
+#   The port to use for stomp communications
 #
-#  [*stomp_user*]
-#    The user used for simple authentication
+# [*stomp_user*]
+#   The user used for simple authentication
 #
-#  [*stomp_password*]
-#    The password used for simple authentication
+# [*stomp_password*]
+#   The password used for simple authentication
+#
+# [*stomp_admin*]
+#   The user configured on Mcollective client used to control
+#   the mcollective infrastructure
+#   Set $install_client to true to install mcollective client on
+#   the local node
+#
+# [*stomp_admin_password*]
+#   The password for the stomp_admin_user
+#
+# [*install_client*]
+#   Set to true if you want to install mcollective client
+#   (With mcollective client you manage the whole mcollective
+#   infrastructure)
+#
+# [*install_stomp_server*]
+#   Set to true if you want to install the Stomp server (currently
+#   only activemq is supported. Note that you need the Example42
+#   activemq as prerequisite for this option
+#
+# [*psk*]
+#   The Pre Shared Key configured on Mcollective clients and servers
+#
+# [*package_client*]
+#   The name of mcollective client package
+#
+# [*template_client*]
+#   Sets the path to the template to use as content for main
+#   mcollective client configuration file
+#
+# [*config_file_client*]
+#   Mcollective client configuration file path
 #
 #
 # Standard class parameters
@@ -223,50 +255,58 @@
 #   Alessandro Franceschi <al@lab42.it/>
 #
 class mcollective (
-  $stomp_host          = params_lookup( 'stomp_host' ),
-  $stomp_port          = params_lookup( 'stomp_port' ),
-  $stomp_user          = params_lookup( 'stomp_user' ),
-  $stomp_password      = params_lookup( 'stomp_password' ),
-  $my_class            = params_lookup( 'my_class' ),
-  $source              = params_lookup( 'source' ),
-  $source_dir          = params_lookup( 'source_dir' ),
-  $source_dir_purge    = params_lookup( 'source_dir_purge' ),
-  $template            = params_lookup( 'template' ),
-  $service_autorestart = params_lookup( 'service_autorestart' , 'global' ),
-  $options             = params_lookup( 'options' ),
-  $version             = params_lookup( 'version' ),
-  $absent              = params_lookup( 'absent' ),
-  $disable             = params_lookup( 'disable' ),
-  $disableboot         = params_lookup( 'disableboot' ),
-  $monitor             = params_lookup( 'monitor' , 'global' ),
-  $monitor_tool        = params_lookup( 'monitor_tool' , 'global' ),
-  $monitor_target      = params_lookup( 'monitor_target' , 'global' ),
-  $puppi               = params_lookup( 'puppi' , 'global' ),
-  $puppi_helper        = params_lookup( 'puppi_helper' , 'global' ),
-  $firewall            = params_lookup( 'firewall' , 'global' ),
-  $firewall_tool       = params_lookup( 'firewall_tool' , 'global' ),
-  $firewall_src        = params_lookup( 'firewall_src' , 'global' ),
-  $firewall_dst        = params_lookup( 'firewall_dst' , 'global' ),
-  $debug               = params_lookup( 'debug' , 'global' ),
-  $audit_only          = params_lookup( 'audit_only' , 'global' ),
-  $package             = params_lookup( 'package' ),
-  $service             = params_lookup( 'service' ),
-  $service_status      = params_lookup( 'service_status' ),
-  $process             = params_lookup( 'process' ),
-  $process_args        = params_lookup( 'process_args' ),
-  $process_user        = params_lookup( 'process_user' ),
-  $config_dir          = params_lookup( 'config_dir' ),
-  $config_file         = params_lookup( 'config_file' ),
-  $config_file_mode    = params_lookup( 'config_file_mode' ),
-  $config_file_owner   = params_lookup( 'config_file_owner' ),
-  $config_file_group   = params_lookup( 'config_file_group' ),
-  $config_file_init    = params_lookup( 'config_file_init' ),
-  $pid_file            = params_lookup( 'pid_file' ),
-  $data_dir            = params_lookup( 'data_dir' ),
-  $log_dir             = params_lookup( 'log_dir' ),
-  $log_file            = params_lookup( 'log_file' ),
-  $port                = params_lookup( 'port' ),
-  $protocol            = params_lookup( 'protocol' )
+  $stomp_host           = params_lookup( 'stomp_host' ),
+  $stomp_port           = params_lookup( 'stomp_port' ),
+  $stomp_user           = params_lookup( 'stomp_user' ),
+  $stomp_password       = params_lookup( 'stomp_password' ),
+  $stomp_admin          = params_lookup( 'stomp_admin' ),
+  $stomp_admin_password = params_lookup( 'stomp_admin_password' ),
+  $install_client       = params_lookup( 'install_client' ),
+  $install_stomp_server = params_lookup( 'install_stomp_server' ),
+  $psk                  = params_lookup( 'psk' ),
+  $package_client       = params_lookup( 'package_client' ),
+  $config_file_client   = params_lookup( 'config_file_client' ),
+  $template_client      = params_lookup( 'template_client' ),
+  $my_class             = params_lookup( 'my_class' ),
+  $source               = params_lookup( 'source' ),
+  $source_dir           = params_lookup( 'source_dir' ),
+  $source_dir_purge     = params_lookup( 'source_dir_purge' ),
+  $template             = params_lookup( 'template' ),
+  $service_autorestart  = params_lookup( 'service_autorestart' , 'global' ),
+  $options              = params_lookup( 'options' ),
+  $version              = params_lookup( 'version' ),
+  $absent               = params_lookup( 'absent' ),
+  $disable              = params_lookup( 'disable' ),
+  $disableboot          = params_lookup( 'disableboot' ),
+  $monitor              = params_lookup( 'monitor' , 'global' ),
+  $monitor_tool         = params_lookup( 'monitor_tool' , 'global' ),
+  $monitor_target       = params_lookup( 'monitor_target' , 'global' ),
+  $puppi                = params_lookup( 'puppi' , 'global' ),
+  $puppi_helper         = params_lookup( 'puppi_helper' , 'global' ),
+  $firewall             = params_lookup( 'firewall' , 'global' ),
+  $firewall_tool        = params_lookup( 'firewall_tool' , 'global' ),
+  $firewall_src         = params_lookup( 'firewall_src' , 'global' ),
+  $firewall_dst         = params_lookup( 'firewall_dst' , 'global' ),
+  $debug                = params_lookup( 'debug' , 'global' ),
+  $audit_only           = params_lookup( 'audit_only' , 'global' ),
+  $package              = params_lookup( 'package' ),
+  $service              = params_lookup( 'service' ),
+  $service_status       = params_lookup( 'service_status' ),
+  $process              = params_lookup( 'process' ),
+  $process_args         = params_lookup( 'process_args' ),
+  $process_user         = params_lookup( 'process_user' ),
+  $config_dir           = params_lookup( 'config_dir' ),
+  $config_file          = params_lookup( 'config_file' ),
+  $config_file_mode     = params_lookup( 'config_file_mode' ),
+  $config_file_owner    = params_lookup( 'config_file_owner' ),
+  $config_file_group    = params_lookup( 'config_file_group' ),
+  $config_file_init     = params_lookup( 'config_file_init' ),
+  $pid_file             = params_lookup( 'pid_file' ),
+  $data_dir             = params_lookup( 'data_dir' ),
+  $log_dir              = params_lookup( 'log_dir' ),
+  $log_file             = params_lookup( 'log_file' ),
+  $port                 = params_lookup( 'port' ),
+  $protocol             = params_lookup( 'protocol' )
   ) inherits mcollective::params {
 
   $bool_source_dir_purge=any2bool($source_dir_purge)
@@ -279,6 +319,8 @@ class mcollective (
   $bool_firewall=any2bool($firewall)
   $bool_debug=any2bool($debug)
   $bool_audit_only=any2bool($audit_only)
+  $bool_install_client=any2bool($install_client)
+  $bool_install_stomp_server=any2bool($install_stomp_server)
 
   ### Definition of some variables used in the module
   $manage_package = $mcollective::bool_absent ? {
@@ -359,6 +401,11 @@ class mcollective (
     default   => template($mcollective::template),
   }
 
+  $manage_file_content_client = $mcollective::template_client ? {
+    ''        => template('mcollective/client.cfg.erb'),
+    default   => template($mcollective::template_client),
+  }
+
   ### Managed resources
   package { 'mcollective':
     ensure => $mcollective::manage_package,
@@ -409,6 +456,15 @@ class mcollective (
     include $mcollective::my_class
   }
 
+  ### Include mcollective client if $install_client == true
+  if $mcollective::bool_install_client == true {
+    include mcollective::client
+  }
+
+  ### Include Stomp Server (ActiveMQ) if $install_stomp_server == true
+  if $mcollective::bool_install_stomp_server == true {
+    include mcollective::stomp_server
+  }
 
   ### Provide puppi data, if enabled ( puppi => true )
   if $mcollective::bool_puppi == true {
@@ -418,6 +474,8 @@ class mcollective (
       variables => $classvars,
       helper    => $mcollective::puppi_helper,
     }
+    # Mcollective puppi plugin
+    include puppi::mcollective::server
   }
 
 
@@ -479,7 +537,7 @@ class mcollective (
     require  => Package['mcollective'],
     loglevel => debug,  # this is needed to avoid it being logged and reported on every run
     # avoid including highly-dynamic facts as they will cause unnecessary template writes
-    content  => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
+    content  => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|manage_file_content|classvars|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
   }
 
 }
