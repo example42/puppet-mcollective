@@ -40,6 +40,10 @@
 #   only activemq is supported. Note that you need the Example42
 #   activemq as prerequisite for this option
 #
+# [*install_plugins*]
+#   Set to true if you want to install some mcollective plugins
+#   Default: true
+#
 # [*psk*]
 #   The Pre Shared Key configured on Mcollective clients and servers
 #
@@ -270,6 +274,7 @@ class mcollective (
   $stomp_admin_password = params_lookup( 'stomp_admin_password' ),
   $install_client       = params_lookup( 'install_client' ),
   $install_stomp_server = params_lookup( 'install_stomp_server' ),
+  $install_plugins      = params_lookup( 'install_plugins' ),
   $psk                  = params_lookup( 'psk' ),
   $package_client       = params_lookup( 'package_client' ),
   $config_file_client   = params_lookup( 'config_file_client' ),
@@ -329,6 +334,7 @@ class mcollective (
   $bool_audit_only=any2bool($audit_only)
   $bool_install_client=any2bool($install_client)
   $bool_install_stomp_server=any2bool($install_stomp_server)
+  $bool_install_plugins=any2bool($install_plugins)
 
   ### Definition of some variables used in the module
   $manage_package = $mcollective::bool_absent ? {
@@ -472,6 +478,11 @@ class mcollective (
   ### Include Stomp Server (ActiveMQ) if $install_stomp_server == true
   if $mcollective::bool_install_stomp_server == true {
     include mcollective::stomp_server
+  }
+
+  ### Include Mcollective Plugins
+  if $mcollective::bool_install_plugins == true {
+    include mcollective::plugins
   }
 
   ### Provide puppi data, if enabled ( puppi => true )

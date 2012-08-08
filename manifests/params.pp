@@ -24,6 +24,7 @@ class mcollective::params {
 
   $install_client = false
   $install_stomp_server = false
+  $install_plugins = true
   $psk = 'th1s_1s_someTHING_diff1cult2guess!butNOTsoSAFE!!'
 
   $package_client = $::operatingsystem ? {

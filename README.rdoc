@@ -26,6 +26,7 @@ The main mcollective class may be configured to install the server agent only, t
         stomp_password       => 'private_server',
         stomp_admin          => 'admin',
         stomp_admin_password => 'private_client',
+        psk                  => 'aSecretPreSharedKey',
         install_client       => $::role ? {
           mco     => true,
           default => false,
@@ -35,6 +36,8 @@ The main mcollective class may be configured to install the server agent only, t
           default => false,
         },
      }
+
+Currently only psk security is supported. Client and Servers have different users and passwors to improve (a bit) the security of this approach (an hijacked server can't become a client without knowing the admin username and password).
 
 == USAGE - Basic management
 
