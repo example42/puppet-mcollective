@@ -25,4 +25,9 @@ class mcollective::client inherits mcollective {
     audit   => $mcollective::manage_audit,
   }
 
+  if $mcollective::bool_puppi == true {
+    # Mcollective puppi plugin
+    include puppi::mcollective::client
+  }
+
 }

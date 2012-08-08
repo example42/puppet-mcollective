@@ -24,7 +24,7 @@ class mcollective::params {
 
   $install_client = false
   $install_stomp_server = false
-  $psk = 'th1s_1s_someTHING_diff1cult2guess!butNOTsoSAFE!!"
+  $psk = 'th1s_1s_someTHING_diff1cult2guess!butNOTsoSAFE!!'
 
   $package_client = $::operatingsystem ? {
     default => 'mcollective-client',
@@ -35,6 +35,7 @@ class mcollective::params {
   }
 
   $template_client = ''
+  $template_stomp_server = 'mcollective/activemq.xml.erb'
 
   ### Application related parameters
 
@@ -92,7 +93,7 @@ class mcollective::params {
   }
 
   # This is the libdir in the configuration file
-  # Here plugins are stored
+  # Here plugins are stored
   $data_dir = $::operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/ => '/usr/share/mcollective/plugins',
     default                   => '/usr/libexec/mcollective',

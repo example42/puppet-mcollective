@@ -50,6 +50,13 @@
 #   Sets the path to the template to use as content for main
 #   mcollective client configuration file
 #
+# [*template_stomp_server*]
+#   Sets the path to the template to use as content for stomp server
+#   configuration file. This is used only when $install_stomp_server
+#   is set to true. The default value provides a working template
+#   (cuttently for ActiveMQ) that uses the other stomp parameters
+#   provided in this module.
+#
 # [*config_file_client*]
 #   Mcollective client configuration file path
 #
@@ -267,6 +274,7 @@ class mcollective (
   $package_client       = params_lookup( 'package_client' ),
   $config_file_client   = params_lookup( 'config_file_client' ),
   $template_client      = params_lookup( 'template_client' ),
+  $template_stomp_server = params_lookup( 'template_stomp_server' ),
   $my_class             = params_lookup( 'my_class' ),
   $source               = params_lookup( 'source' ),
   $source_dir           = params_lookup( 'source_dir' ),
@@ -472,6 +480,7 @@ class mcollective (
     puppi::ze { 'mcollective':
       ensure    => $mcollective::manage_file,
       variables => $classvars,
+      filter    => '.*content.*|.*password.*|.*psk.*',
       helper    => $mcollective::puppi_helper,
     }
     # Mcollective puppi plugin
@@ -481,13 +490,6 @@ class mcollective (
 
   ### Service monitoring, if enabled ( monitor => true )
   if $mcollective::bool_monitor == true {
-    monitor::port { "mcollective_${mcollective::protocol}_${mcollective::port}":
-      protocol => $mcollective::protocol,
-      port     => $mcollective::port,
-      target   => $mcollective::monitor_target,
-      tool     => $mcollective::monitor_tool,
-      enable   => $mcollective::manage_monitor,
-    }
     monitor::process { 'mcollective_process':
       process  => $mcollective::process,
       service  => $mcollective::service,
