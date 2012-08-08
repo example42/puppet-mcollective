@@ -1,0 +1,3 @@
+[submodule "files/mcollective-plugins"]
+	path = files/mcollective-plugins
+	url = https://github.com/puppetlabs/mcollective-plugins
