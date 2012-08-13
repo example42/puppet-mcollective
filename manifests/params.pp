@@ -108,7 +108,7 @@ class mcollective::params {
     default => '/var/log/mcollective.log',
   }
 
-  $port = '6163'
+  $port = '61613'
   $protocol = 'tcp'
 
   # General Settings
