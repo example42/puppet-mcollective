@@ -501,6 +501,13 @@ class mcollective (
 
   ### Service monitoring, if enabled ( monitor => true )
   if $mcollective::bool_monitor == true {
+    monitor::port { "mcollective_stomp_${mcollective::stomp_host}_${mcollective::stomp_port}":
+      protocol => $mcollective::protocol,
+      port     => $mcollective::stomp_port,
+      target   => $mcollective::stomp_host,
+      tool     => $mcollective::monitor_tool,
+      enable   => $mcollective::manage_monitor,
+    }
     monitor::process { 'mcollective_process':
       process  => $mcollective::process,
       service  => $mcollective::service,
