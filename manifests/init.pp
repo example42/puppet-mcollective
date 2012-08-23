@@ -165,7 +165,8 @@
 #   and $firewall_tool
 #
 # [*firewall_src*]
-#   Define which source ip/net allow for firewalling mcollective. Default: 0.0.0.0/0
+#   Define which source ip/net allow for firewalling mcollective.
+#   Default: 0.0.0.0/0
 #   Can be defined also by the (top scope) variables $mcollective_firewall_src
 #   and $firewall_src
 #
@@ -176,7 +177,7 @@
 #
 # [*debug*]
 #   Set to 'true' to enable modules debugging
-#   Can be defined also by the (top scope) variables $mcollective_debug and $debug
+#   Can be defined by the (top scope) variables $mcollective_debug and $debug
 #
 # [*audit_only*]
 #   Set to 'true' if you don't intend to override existing configuration files

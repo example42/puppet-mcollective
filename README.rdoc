@@ -37,7 +37,8 @@ The main mcollective class may be configured to install the server agent only, t
         },
      }
 
-Currently only psk security is supported. Client and Servers have different users and passwors to improve (a bit) the security of this approach (an hijacked server can't become a client without knowing the admin username and password).
+Currently only psk security is supported. Client and Servers have different users and passwords to improve (a bit) the security of this approach (an hijacked server can't become a client without knowing the admin username and password).
+
 
 == USAGE - Basic management
 
