@@ -48,7 +48,7 @@ class mcollective::plugins {
   # }
 
   # mcollective::plugin { 'resource_data':
-  #   plugin_type => 'data', 
+  #   plugin_type => 'data',
   # }
 
 }

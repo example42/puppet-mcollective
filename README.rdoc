@@ -37,7 +37,14 @@ The main mcollective class may be configured to install the server agent only, t
         },
      }
 
-Currently only psk security is supported. Client and Servers have different users and passwors to improve (a bit) the security of this approach (an hijacked server can't become a client without knowing the admin username and password).
+Currently only psk security is supported. Client and Servers have different users and passwords to improve (a bit) the security of this approach (an hijacked server can't become a client without knowing the admin username and password).
+
+* Basic setup without plugins installation
+
+      class { 'mcollective':
+        install_plugins => false,
+      }
+
 
 == USAGE - Basic management
 
@@ -128,3 +135,11 @@ Currently only psk security is supported. Client and Servers have different user
           firewall_dst  => $ipaddress_eth0,
         }
 
+
+== TODO
+
+* Complete spec tests
+
+* Introduce TLS security
+
+* Add extra plugins

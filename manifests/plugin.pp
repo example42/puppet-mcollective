@@ -55,7 +55,7 @@ define mcollective::plugin (
     true    => "${name}.rb",
     ''      => false,
     default => $application,
-  }  
+  }
 
   file { "Mcollective_${name}.rb":
     ensure  => $ensure,
@@ -92,6 +92,6 @@ define mcollective::plugin (
       notify  => Service['mcollective'],
       source  => "${base_source}/application/${real_application}",
     }
-  } 
+  }
 
 }
