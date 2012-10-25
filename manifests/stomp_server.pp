@@ -13,7 +13,8 @@
 class mcollective::stomp_server inherits mcollective {
 
   class { 'activemq':
-    template => $mcollective::template_stomp_server,
+    template             => $mcollective::template_stomp_server,
+    install_dependencies => $mcollective::install_dependencies, 
   }
 
 }

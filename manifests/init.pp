@@ -6,6 +6,13 @@
 # == Parameters
 #
 # Module specific parameters
+# [*install_dependencies*]
+#   If dependencies from other Example42 modules are used. 
+#   Note that these dependencies are needed for an out of the box
+#   setup of the module, but you might want to provide them with
+#   other modules or functions. Default: true.
+#   Set to false if these dependencies interphere with your modules.
+#
 # [*stomp_host*]
 #   Address or hostname of the stomp server (Active/RabbitMQ server)
 #   If set a default configfile is provided which uses the stomp
@@ -267,6 +274,7 @@
 #   Alessandro Franceschi <al@lab42.it/>
 #
 class mcollective (
+  $install_dependencies = params_lookup( 'install_dependencies' ),
   $stomp_host           = params_lookup( 'stomp_host' ),
   $stomp_port           = params_lookup( 'stomp_port' ),
   $stomp_user           = params_lookup( 'stomp_user' ),
@@ -323,6 +331,7 @@ class mcollective (
   $protocol             = params_lookup( 'protocol' )
   ) inherits mcollective::params {
 
+  $bool_install_dependencies =any2bool($install_dependencies )
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
   $bool_absent=any2bool($absent)

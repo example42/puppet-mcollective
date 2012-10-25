@@ -45,6 +45,13 @@ Currently only psk security is supported. Client and Servers have different user
         install_plugins => false,
       }
 
+* Install mcollective stomp server without including the (needed) dependencies that rely on other Example42 modules.
+
+        class { 'mcollective':
+          install_stomp_server => true,
+          install_dependencies => false,
+        }
+
 
 == USAGE - Basic management
 
