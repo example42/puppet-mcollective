@@ -431,9 +431,8 @@ class mcollective (
   }
 
   ### Managed resources
-  package { 'mcollective':
+  package { $mcollective::package:
     ensure => $mcollective::manage_package,
-    name   => $mcollective::package,
   }
 
   service { 'mcollective':
@@ -442,7 +441,7 @@ class mcollective (
     enable     => $mcollective::manage_service_enable,
     hasstatus  => $mcollective::service_status,
     pattern    => $mcollective::process,
-    require    => Package['mcollective'],
+    require    => Package[$mcollective::package],
   }
 
   file { 'mcollective.conf':
@@ -451,7 +450,7 @@ class mcollective (
     mode    => $mcollective::config_file_mode,
     owner   => $mcollective::config_file_owner,
     group   => $mcollective::config_file_group,
-    require => Package['mcollective'],
+    require => Package[$mcollective::package],
     notify  => $mcollective::manage_service_autorestart,
     source  => $mcollective::manage_file_source,
     content => $mcollective::manage_file_content,
@@ -464,7 +463,7 @@ class mcollective (
     file { 'mcollective.dir':
       ensure  => directory,
       path    => $mcollective::config_dir,
-      require => Package['mcollective'],
+      require => Package[$mcollective::package],
       notify  => $mcollective::manage_service_autorestart,
       source  => $mcollective::source_dir,
       recurse => true,
@@ -565,7 +564,7 @@ class mcollective (
     mode     => '0400',
     owner    => 'root',
     group    => 'root',
-    require  => Package['mcollective'],
+    require  => Package[$mcollective::package],
     loglevel => debug,  # this is needed to avoid it being logged and reported on every run
     # avoid including highly-dynamic facts as they will cause unnecessary template writes
     content  => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|last_run|manage_file_content|classvars|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),

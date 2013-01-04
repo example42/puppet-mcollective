@@ -42,6 +42,7 @@ class mcollective::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
+    ubuntu  => ['mcollective','ruby-stomp'],
     default => 'mcollective',
   }
 

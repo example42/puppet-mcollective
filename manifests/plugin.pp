@@ -63,7 +63,7 @@ define mcollective::plugin (
     owner   => root,
     group   => root,
     mode    => '0444',
-    require => Package['mcollective'],
+    require => Package[$mcollective::package],
     notify  => Service['mcollective'],
     source  => "${base_source}/${plugin_type}/${name}.rb",
   }
@@ -75,7 +75,7 @@ define mcollective::plugin (
       owner   => root,
       group   => root,
       mode    => '0444',
-      require => Package['mcollective'],
+      require => Package[$mcollective::package],
       notify  => Service['mcollective'],
       source  => "${base_source}/${plugin_type}/${real_ddl}",
     }
@@ -88,7 +88,7 @@ define mcollective::plugin (
       owner   => root,
       group   => root,
       mode    => '0444',
-      require => Package['mcollective'],
+      require => Package[$mcollective::package],
       notify  => Service['mcollective'],
       source  => "${base_source}/application/${real_application}",
     }
