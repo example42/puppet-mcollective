@@ -37,7 +37,10 @@ class mcollective::params {
   }
 
   $template_client = ''
-  $template_stomp_server = 'mcollective/activemq.xml.erb'
+  $template_stomp_server = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/ => 'mcollective/ubuntu_activemq.xml.erb',
+    default                   => 'mcollective/activemq.xml.erb',
+  }
 
   ### Application related parameters
 
