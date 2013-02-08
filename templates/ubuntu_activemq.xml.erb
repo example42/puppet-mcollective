@@ -1,0 +1,85 @@
+<!--
+    File Managed By Puppet
+-->
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:amq="http://activemq.apache.org/schema/core"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+    http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+    http://activemq.apache.org/camel/schema/spring http://activemq.apache.org/camel/schema/spring/camel-spring.xsd">
+
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="localhost" dataDirectory="${activemq.base}/data" destroyApplicationContextOnStop="true">
+
+        <destinationPolicy>
+            <policyMap>
+              <policyEntries>
+                <policyEntry topic=">" producerFlowControl="true" memoryLimit="1mb">
+                  <pendingSubscriberPolicy>
+                    <vmCursor />
+                  </pendingSubscriberPolicy>
+                </policyEntry>
+                <policyEntry queue=">" producerFlowControl="true" memoryLimit="1mb">
+                </policyEntry>
+              </policyEntries>
+            </policyMap>
+        </destinationPolicy>
+
+        <managementContext>
+            <managementContext createConnector="false"/>
+        </managementContext>
+
+        <persistenceAdapter>
+            <kahaDB directory="${activemq.base}/data/kahadb"/>
+        </persistenceAdapter>
+
+        <plugins>
+          <statisticsBrokerPlugin/>
+
+          <simpleAuthenticationPlugin>
+            <users>
+              <authenticationUser username="${activemq.username}" password="${activemq.password}" groups="admins,everyone"/>
+              <authenticationUser username="<%= scope.lookupvar('mcollective::stomp_user') %>" password="<%= scope.lookupvar('mcollective::stomp_password') %>" groups="mcollective,everyone"/>
+              <authenticationUser username="<%= scope.lookupvar('mcollective::stomp_admin') %>" password="<%= scope.lookupvar('mcollective::stomp_admin_password') %>" groups="mcollective,admins,everyone"/>
+            </users>
+          </simpleAuthenticationPlugin>
+          <authorizationPlugin>
+            <map>
+              <authorizationMap>
+                <authorizationEntries>
+                  <authorizationEntry queue=">" write="admins" read="admins" admin="admins" />
+                  <authorizationEntry topic=">" write="admins" read="admins" admin="admins" />
+                  <authorizationEntry topic="mcollective.>" write="admins" read="admins" admin="admins" />
+                  <authorizationEntry topic="mcollective.>" write="admins" read="admins" admin="admins" />
+                  <authorizationEntry topic="mcollective.*.reply" write="mcollective" admin="mcollective" />
+                  <authorizationEntry topic="mcollective.registration.command" write="mcollective" read="mcollective" admin="mcollective" />
+                  <authorizationEntry topic="mcollective.*.command" read="mcollective" admin="mcollective" />
+                  <authorizationEntry topic="ActiveMQ.Advisory.>" read="everyone" write="everyone" admin="everyone"/>
+                </authorizationEntries>
+              </authorizationMap>
+            </map>
+          </authorizationPlugin>
+        </plugins>
+
+
+        <systemUsage>
+            <systemUsage>
+                <memoryUsage>
+                    <memoryUsage limit="100 mb"/>
+                </memoryUsage>
+                <storeUsage>
+                    <storeUsage limit="1 gb"/>
+                </storeUsage>
+                <tempUsage>
+                    <tempUsage limit="100 mb"/>
+                </tempUsage>
+            </systemUsage>
+        </systemUsage>
+
+        <transportConnectors>
+            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616"/>
+            <transportConnector name="stomp+nio" uri="stomp+nio://0.0.0.0:<%= scope.lookupvar('mcollective::stomp_port') %>"/>
+        </transportConnectors>
+
+    </broker>
+</beans>
