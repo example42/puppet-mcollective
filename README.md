@@ -1,4 +1,4 @@
-= Puppet module: mcollective
+# Puppet module: mcollective
 
 This is a Puppet module for mcollective based on the second generation layout ("NextGen") of Example42 Puppet Modules.
 
@@ -14,7 +14,7 @@ This module requires functions provided by the Example42 Puppi module (you need 
 
 For detailed info about the logic and usage patterns of Example42 modules check the DOCS directory on Example42 main modules set.
 
-== USAGE - Module specific
+## USAGE - Module specific
 
 The main mcollective class may be configured to install the server agent only, the central client console or the  Stomp server (ActiveMq currently)
 
@@ -53,7 +53,7 @@ Currently only psk security is supported. Client and Servers have different user
         }
 
 
-== USAGE - Basic management
+## USAGE - Basic management
 
 * Install mcollective with default settings
 
@@ -84,7 +84,7 @@ Currently only psk security is supported. Client and Servers have different user
         }
 
 
-== USAGE - Overrides and Customizations
+## USAGE - Overrides and Customizations
 * Use custom sources for main config file 
 
         class { 'mcollective':
@@ -112,7 +112,7 @@ Currently only psk security is supported. Client and Servers have different user
         }
 
 
-== USAGE - Example42 extensions management 
+## USAGE - Example42 extensions management 
 * Activate puppi (recommended, but disabled by default)
 
         class { 'mcollective':
@@ -143,7 +143,7 @@ Currently only psk security is supported. Client and Servers have different user
         }
 
 
-== TODO
+## TODO
 
 * Complete spec tests
 
