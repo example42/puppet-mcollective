@@ -150,3 +150,5 @@ Currently only psk security is supported. Client and Servers have different user
 * Introduce TLS security
 
 * Add extra plugins
+
+[![Build Status](https://travis-ci.org/example42/puppet-mcollective.png?branch=master)](https://travis-ci.org/example42/puppet-mcollective)
