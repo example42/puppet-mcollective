@@ -126,11 +126,8 @@ describe 'mcollective' do
     end
   end
 
-  describe 'Test service autorestart', :broken => true do
-    it 'should automatically restart the service, by default' do
-      content = catalogue.resource('file', 'mcollective.conf').send(:parameters)[:notify]
-      content.should == 'Service[mcollective]{:name=>"mcollective"}'
-    end
+  describe 'Test service autorestart' do
+    it { should contain_file('mcollective.conf').with_notify('Service[mcollective]') }
   end
 
   describe 'Test service autorestart' do
