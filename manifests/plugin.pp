@@ -38,12 +38,17 @@ define mcollective::plugin (
   $plugin_type    = 'agent',
   $install_client = false,
   $ensure         = 'present',
-  $ddl            = true ,
+  $ddl            = true,
   $application    = true ) {
 
   include mcollective
 
   $bool_install_client=any2bool($install_client)
+
+  $real_ensure = $ensure ? {
+    absent  => 'absent',
+    default => 'present',
+  }
 
   $real_ddl = $ddl ? {
     true    => "${name}.ddl",
@@ -58,7 +63,7 @@ define mcollective::plugin (
   }
 
   file { "Mcollective_${name}.rb":
-    ensure  => $ensure,
+    ensure  => $real_ensure,
     path    => "${mcollective::data_dir}/mcollective/${plugin_type}/${name}.rb",
     owner   => root,
     group   => root,
@@ -70,7 +75,7 @@ define mcollective::plugin (
 
   if $real_ddl != false {
     file { "Mcollective_${name}.ddl":
-      ensure  => $ensure,
+      ensure  => $real_ensure,
       path    => "${mcollective::data_dir}/mcollective/${plugin_type}/${real_ddl}",
       owner   => root,
       group   => root,
@@ -83,7 +88,7 @@ define mcollective::plugin (
 
   if $real_application != false and $bool_install_client == true {
     file { "Mcollective_${name}.app":
-      ensure  => $ensure,
+      ensure  => $real_ensure,
       path    => "${mcollective::data_dir}/mcollective/application/${real_application}",
       owner   => root,
       group   => root,
