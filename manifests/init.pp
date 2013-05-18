@@ -440,7 +440,7 @@ class mcollective (
     name       => $mcollective::service,
     enable     => $mcollective::manage_service_enable,
     hasstatus  => $mcollective::service_status,
-    pattern    => $mcollective::process,
+    pattern    => $mcollective::process_args,
     require    => Package[$mcollective::package],
   }
 

@@ -15,7 +15,7 @@
 class mcollective::params {
 
   ### Class specific parameters
-  $install_dependencies = true 
+  $install_dependencies = true
   $stomp_host = 'localhost'
   $stomp_port = '61613'
   $stomp_user = 'mcollective'
@@ -54,6 +54,7 @@ class mcollective::params {
   }
 
   $service_status = $::operatingsystem ? {
+    ubuntu  => false,
     default => true,
   }
 
