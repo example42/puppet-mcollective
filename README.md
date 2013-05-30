@@ -20,30 +20,30 @@ The main mcollective class may be configured to install the server agent only, t
 
 * A single class definition (can be used on a common baseline class) that manages stomp credentials and installations of the mcollective ecosystem components, according to custom logic)
 
-      class { 'mcollective':
-        stomp_host           => 'mq.example42.com',
-        stomp_user           => 'mcollective',
-        stomp_password       => 'private_server',
-        stomp_admin          => 'admin',
-        stomp_admin_password => 'private_client',
-        psk                  => 'aSecretPreSharedKey',
-        install_client       => $::role ? {
-          mco     => true,
-          default => false,
-        },
-        install_stomp_server => $::role ? {
-          mq      => true,
-          default => false,
-        },
-     }
+        class { 'mcollective':
+          stomp_host           => 'mq.example42.com',
+          stomp_user           => 'mcollective',
+          stomp_password       => 'private_server',
+          stomp_admin          => 'admin',
+          stomp_admin_password => 'private_client',
+          psk                  => 'aSecretPreSharedKey',
+          install_client       => $::role ? {
+            mco     => true,
+            default => false,
+          },
+          install_stomp_server => $::role ? {
+            mq      => true,
+            default => false,
+          },
+        }
 
 Currently only psk security is supported. Client and Servers have different users and passwords to improve (a bit) the security of this approach (an hijacked server can't become a client without knowing the admin username and password).
 
 * Basic setup without plugins installation
 
-      class { 'mcollective':
-        install_plugins => false,
-      }
+        class { 'mcollective':
+          install_plugins => false,
+        }
 
 * Install mcollective stomp server without including the (needed) dependencies that rely on other Example42 modules.
 
