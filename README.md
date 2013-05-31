@@ -52,6 +52,11 @@ Currently only psk security is supported. Client and Servers have different user
           install_dependencies => false,
         }
 
+* Install mcollective from Puppetlabs repo on Ubuntu (on Ubuntu daemonize option is set to 0 because the service is managed by Upstart, by default is set to 1 for the other distros. If you use Puppetlabs' repo on Ubuntu set explicitely to 1 as init and not upstart is used to manage the service)
+
+        class { 'mcollective':
+          daemonize => '1',
+        }
 
 ## USAGE - Basic management
 
