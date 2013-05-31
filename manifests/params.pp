@@ -42,6 +42,11 @@ class mcollective::params {
     default                   => 'mcollective/activemq.xml.erb',
   }
 
+  $daemonize = $::operatingsystem ? {
+    Ubuntu   => '0',
+    default  => '1',
+  }
+
   ### Application related parameters
 
   $package = $::operatingsystem ? {

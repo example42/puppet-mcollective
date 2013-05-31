@@ -71,6 +71,8 @@
 # [*config_file_client*]
 #   Mcollective client configuration file path
 #
+# [*daemonize*]
+#   Daemonize option. Default defined according to OS
 #
 # Standard class parameters
 # Define the general class behaviour and customizations
@@ -289,6 +291,7 @@ class mcollective (
   $config_file_client   = params_lookup( 'config_file_client' ),
   $template_client      = params_lookup( 'template_client' ),
   $template_stomp_server = params_lookup( 'template_stomp_server' ),
+  $daemonize            = params_lookup( 'daemonize' ),
   $my_class             = params_lookup( 'my_class' ),
   $source               = params_lookup( 'source' ),
   $source_dir           = params_lookup( 'source_dir' ),
