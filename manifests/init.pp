@@ -438,19 +438,6 @@ class mcollective (
     ensure => $mcollective::manage_package,
   }
 
-  # ruby-stomp is currently not a dependency of mcollective at least on Debian
-  # but required for it to function
-  case $::operatingsystem {
-    /(?i:Debian|Ubuntu|Mint)/: {
-      if ! defined(Package['ruby-stomp']) {
-        package { 'ruby-stomp':
-          ensure  => $mcollective::manage_package,
-          before  => Service['mcollective']
-        }
-      }
-    }
-  }
-
   service { 'mcollective':
     ensure     => $mcollective::manage_service_ensure,
     name       => $mcollective::service,
