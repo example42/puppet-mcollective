@@ -50,8 +50,8 @@ class mcollective::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
-    ubuntu  => ['mcollective','libstomp-ruby'],
-    default => 'mcollective',
+    /(?i:Debian|Ubuntu|Mint)/ => ['mcollective','libstomp-ruby'],
+    default                   => 'mcollective',
   }
 
   $service = $::operatingsystem ? {
