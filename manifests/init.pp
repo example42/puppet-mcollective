@@ -315,6 +315,7 @@ class mcollective (
   $debug                = params_lookup( 'debug' , 'global' ),
   $audit_only           = params_lookup( 'audit_only' , 'global' ),
   $package              = params_lookup( 'package' ),
+  $package_dependencies = params_lookup( 'package_dependencies' ),
   $service              = params_lookup( 'service' ),
   $service_status       = params_lookup( 'service_status' ),
   $process              = params_lookup( 'process' ),
@@ -434,6 +435,13 @@ class mcollective (
   }
 
   ### Managed resources
+  if $mcollective::package_dependencies {
+    package { $mcollective::package_dependencies:
+      ensure  => $mcollective::manage_package,
+      before  => Package[$mcollective::package]
+    }
+  }
+
   package { $mcollective::package:
     ensure => $mcollective::manage_package,
   }
@@ -495,6 +503,11 @@ class mcollective (
   ### Include Mcollective Plugins
   if $mcollective::bool_install_plugins == true {
     include mcollective::plugins
+  }
+
+  ### Include Mcollective Plugin Dependencies
+  if $mcollective::bool_install_dependencies == true {
+    include mcollective::dependencies
   }
 
   ### Provide puppi data, if enabled ( puppi => true )
