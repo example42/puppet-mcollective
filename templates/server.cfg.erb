@@ -7,6 +7,7 @@ libdir = <%= scope.lookupvar('mcollective::data_dir') %>
 logfile = <%= scope.lookupvar('mcollective::log_file') %>
 loglevel = info
 daemonize = <%= scope.lookupvar('mcollective::daemonize') %>
+direct_addressing = 1
 
 # Plugins
 securityprovider = psk
