@@ -37,6 +37,7 @@ define mcollective::plugin (
   $base_source    = 'puppet:///modules/mcollective/plugins',
   $plugin_type    = 'agent',
   $install_client = false,
+  $install_mode   = 'package',
   $ensure         = 'present',
   $ddl            = true,
   $application    = true ) {
@@ -62,41 +63,57 @@ define mcollective::plugin (
     default => $application,
   }
 
-  file { "Mcollective_${name}.rb":
-    ensure  => $real_ensure,
-    path    => "${mcollective::data_dir}/mcollective/${plugin_type}/${name}.rb",
-    owner   => root,
-    group   => root,
-    mode    => '0444',
-    require => Package[$mcollective::package],
-    notify  => Service['mcollective'],
-    source  => "${base_source}/${plugin_type}/${name}.rb",
-  }
 
-  if $real_ddl != false {
-    file { "Mcollective_${name}.ddl":
+
+  if $install_mode == 'package' {
+
+    package { "mcollective-${name}-agent":
       ensure  => $real_ensure,
-      path    => "${mcollective::data_dir}/mcollective/${plugin_type}/${real_ddl}",
+    }
+
+    if $bool_install_client == true {
+      package { "mcollective-${name}-client":
+        ensure  => $real_ensure,
+      }
+    }
+
+  } else {
+
+    file { "Mcollective_${name}.rb":
+      ensure  => $real_ensure,
+      path    => "${mcollective::data_dir}/mcollective/${plugin_type}/${name}.rb",
       owner   => root,
       group   => root,
       mode    => '0444',
       require => Package[$mcollective::package],
       notify  => Service['mcollective'],
-      source  => "${base_source}/${plugin_type}/${real_ddl}",
+      source  => "${base_source}/${plugin_type}/${name}.rb",
+    }
+
+    if $real_ddl != false {
+      file { "Mcollective_${name}.ddl":
+        ensure  => $real_ensure,
+        path    => "${mcollective::data_dir}/mcollective/${plugin_type}/${real_ddl}",
+        owner   => root,
+        group   => root,
+        mode    => '0444',
+        require => Package[$mcollective::package],
+        notify  => Service['mcollective'],
+        source  => "${base_source}/${plugin_type}/${real_ddl}",
+      }
+    }
+
+    if $real_application != false and $bool_install_client == true {
+      file { "Mcollective_${name}.app":
+        ensure  => $real_ensure,
+        path    => "${mcollective::data_dir}/mcollective/application/${real_application}",
+        owner   => root,
+        group   => root,
+        mode    => '0444',
+        require => Package[$mcollective::package],
+        notify  => Service['mcollective'],
+        source  => "${base_source}/application/${real_application}",
+      }
     }
   }
-
-  if $real_application != false and $bool_install_client == true {
-    file { "Mcollective_${name}.app":
-      ensure  => $real_ensure,
-      path    => "${mcollective::data_dir}/mcollective/application/${real_application}",
-      owner   => root,
-      group   => root,
-      mode    => '0444',
-      require => Package[$mcollective::package],
-      notify  => Service['mcollective'],
-      source  => "${base_source}/application/${real_application}",
-    }
-  }
-
 }

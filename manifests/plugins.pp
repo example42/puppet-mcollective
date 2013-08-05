@@ -2,62 +2,30 @@ class mcollective::plugins {
 
   include mcollective
 
-  # PuppetLabs Plugins
-  mcollective::plugin { 'process':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
-    application    => 'pgrep.rb',
-  }
-
-  mcollective::plugin { 'iptables':
+  Mcollective::Plugin {
     ensure         => $mcollective::manage_package,
     install_client => $mcollective::install_client,
   }
 
   mcollective::plugin { 'filemgr':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
+  }
+
+  mcollective::plugin { 'iptables':
+  }
+
+  mcollective::plugin { 'nrpe':
   }
 
   mcollective::plugin { 'nettest':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
-  }
-
-  mcollective::plugin { 'service':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
-  }
-
-  mcollective::plugin { 'puppetd':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
-  }
-
-  mcollective::plugin { 'puppetca':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
-    application    => false,
-  }
-
-  mcollective::plugin { 'puppetral':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
-    application    => false,
   }
 
   mcollective::plugin { 'package':
-    ensure         => $mcollective::manage_package,
-    install_client => $mcollective::install_client,
+  } 
+
+  mcollective::plugin { 'puppet':
   }
 
-  # These are usable on Mcollective > 2.1
-  # mcollective::plugin { 'sysctl_data':
-  #   plugin_type => 'data',
-  # }
-
-  # mcollective::plugin { 'resource_data':
-  #   plugin_type => 'data',
-  # }
+  mcollective::plugin { 'service':
+  }
 
 }

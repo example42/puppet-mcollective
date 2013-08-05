@@ -43,7 +43,7 @@ class mcollective::params {
   }
 
   $daemonize = $::operatingsystem ? {
-    Ubuntu   => '0',
+#    Ubuntu   => '0',
     default  => '1',
   }
 
