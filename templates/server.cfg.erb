@@ -10,9 +10,6 @@ max_log_size = 2097152
 loglevel = info
 daemonize = <%= scope.lookupvar('mcollective::daemonize') %>
 direct_addressing = 1
-rpcaudit = 1
-rpcauditprovider = logstash
-plugin.logstash.logfile = /var/log/mcollective-logstashaudit.log
 
 # Plugins
 securityprovider = psk
