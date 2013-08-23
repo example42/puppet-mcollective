@@ -150,6 +150,9 @@
 #   Can be defined also by the (top scope) variables $mcollective_monitor_target
 #   and $monitor_target
 #
+# [*monitor_config_hash*]
+#   A generic Hash that will be passed to certain monitoring Implementations
+#
 # [*puppi*]
 #   Set to 'true' to enable creation of module data files that are used by puppi
 #   Can be defined also by the top scope variables $mcollective_puppi and $puppi
@@ -306,6 +309,7 @@ class mcollective (
   $monitor              = params_lookup( 'monitor' , 'global' ),
   $monitor_tool         = params_lookup( 'monitor_tool' , 'global' ),
   $monitor_target       = params_lookup( 'monitor_target' , 'global' ),
+  $monitor_config_hash  = params_lookup( 'monitor_config_hash' ),
   $puppi                = params_lookup( 'puppi' , 'global' ),
   $puppi_helper         = params_lookup( 'puppi_helper' , 'global' ),
   $firewall             = params_lookup( 'firewall' , 'global' ),
@@ -315,6 +319,7 @@ class mcollective (
   $debug                = params_lookup( 'debug' , 'global' ),
   $audit_only           = params_lookup( 'audit_only' , 'global' ),
   $package              = params_lookup( 'package' ),
+  $package_dependencies = params_lookup( 'package_dependencies' ),
   $service              = params_lookup( 'service' ),
   $service_status       = params_lookup( 'service_status' ),
   $process              = params_lookup( 'process' ),
@@ -434,6 +439,13 @@ class mcollective (
   }
 
   ### Managed resources
+  if $mcollective::package_dependencies {
+    package { $mcollective::package_dependencies:
+      ensure  => $mcollective::manage_package,
+      before  => Package[$mcollective::package]
+    }
+  }
+
   package { $mcollective::package:
     ensure => $mcollective::manage_package,
   }
@@ -497,6 +509,11 @@ class mcollective (
     include mcollective::plugins
   }
 
+  ### Include Mcollective Plugin Dependencies
+  if $mcollective::bool_install_dependencies == true {
+    include mcollective::dependencies
+  }
+
   ### Provide puppi data, if enabled ( puppi => true )
   if $mcollective::bool_puppi == true {
     $classvars=get_class_args()
@@ -522,13 +539,14 @@ class mcollective (
       enable      => $mcollective::manage_monitor,
     }
     monitor::process { 'mcollective_process':
-      process  => $mcollective::process,
-      service  => $mcollective::service,
-      pidfile  => $mcollective::pid_file,
-      user     => $mcollective::process_user,
-      argument => $mcollective::process_args,
-      tool     => $mcollective::monitor_tool,
-      enable   => $mcollective::manage_monitor,
+      process     => $mcollective::process,
+      service     => $mcollective::service,
+      pidfile     => $mcollective::pid_file,
+      user        => $mcollective::process_user,
+      argument    => $mcollective::process_args,
+      tool        => $mcollective::monitor_tool,
+      enable      => $mcollective::manage_monitor,
+      config_hash => $mcollective::monitor_config_hash,
     }
   }
 

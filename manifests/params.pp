@@ -50,8 +50,13 @@ class mcollective::params {
   ### Application related parameters
 
   $package = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => ['mcollective','libstomp-ruby'],
+    /(?i:Debian|Ubuntu|Mint)/ => 'mcollective',
     default                   => 'mcollective',
+  }
+
+  $package_dependencies = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/ => 'libstomp-ruby',
+    default                   => undef,
   }
 
   $service = $::operatingsystem ? {
