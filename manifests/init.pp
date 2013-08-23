@@ -150,31 +150,8 @@
 #   Can be defined also by the (top scope) variables $mcollective_monitor_target
 #   and $monitor_target
 #
-# [*monitor_cpu_below*]
-#   The CPU usage in %
-#   Can be defined also by the (top scope) variables $mcollective_monitor_cpu_below
-#   and $monitor_cpu_below
-#
-# [*monitor_cpu_every*]
-#   Monitoring interval in Seconds
-#   Can be defined also by the (top scope) variables $mcollective_monitor_cpu_every
-#   and $monitor_cpu_every
-#
-# [*monitor_cpu_times*]
-#   Can be defined also by the (top scope) variables $mcollective_monitor_cpu_times
-#   and $monitor_cpu_times
-#
-# [*monitor_memory_below*]
-#   Can be defined also by the (top scope) variables $mcollective_monitor_memory_below
-#   and $monitor_memory_below
-#
-# [*monitor_memory_every*]
-#   Can be defined also by the (top scope) variables $mcollective_monitor_memory_every
-#   and $monitor_memory_every
-#
-# [*monitor_memory_times*]
-#   Can be defined also by the (top scope) variables $mcollective_monitor_memory_times
-#   and $monitor_memory_times
+# [*monitor_config_hash*]
+#   A generic Hash that will be passed to certain monitoring Implementations
 #
 # [*puppi*]
 #   Set to 'true' to enable creation of module data files that are used by puppi
@@ -332,12 +309,7 @@ class mcollective (
   $monitor              = params_lookup( 'monitor' , 'global' ),
   $monitor_tool         = params_lookup( 'monitor_tool' , 'global' ),
   $monitor_target       = params_lookup( 'monitor_target' , 'global' ),
-  $monitor_cpu_below    = params_lookup( 'monitor_cpu_below' , 'global' ),
-  $monitor_cpu_every    = params_lookup( 'monitor_cpu_every' , 'global' ),
-  $monitor_cpu_times    = params_lookup( 'monitor_cpu_times' , 'global' ),
-  $monitor_memory_below = params_lookup( 'monitor_memory_below' , 'global' ),
-  $monitor_memory_every = params_lookup( 'monitor_memory_every' , 'global' ),
-  $monitor_memory_times = params_lookup( 'monitor_memory_times' , 'global' ),
+  $monitor_config_hash  = params_lookup( 'monitor_config_hash' ),
   $puppi                = params_lookup( 'puppi' , 'global' ),
   $puppi_helper         = params_lookup( 'puppi_helper' , 'global' ),
   $firewall             = params_lookup( 'firewall' , 'global' ),
@@ -567,19 +539,14 @@ class mcollective (
       enable      => $mcollective::manage_monitor,
     }
     monitor::process { 'mcollective_process':
-      process  => $mcollective::process,
-      service  => $mcollective::service,
-      pidfile  => $mcollective::pid_file,
-      user     => $mcollective::process_user,
-      argument => $mcollective::process_args,
-      tool     => $mcollective::monitor_tool,
-      enable   => $mcollective::manage_monitor,
-      cpu_below    => $mcollective::monitor_cpu_below,
-      cpu_times    => $mcollective::monitor_cpu_times,
-      cpu_every    => $mcollective::monitor_cpu_every,
-      memory_below => $mcollective::monitor_memory_below,
-      memory_times => $mcollective::monitor_memory_times,
-      memory_every => $mcollective::monitor_memory_every,
+      process     => $mcollective::process,
+      service     => $mcollective::service,
+      pidfile     => $mcollective::pid_file,
+      user        => $mcollective::process_user,
+      argument    => $mcollective::process_args,
+      tool        => $mcollective::monitor_tool,
+      enable      => $mcollective::manage_monitor,
+      config_hash => $mcollective::monitor_config_hash,
     }
   }
 
