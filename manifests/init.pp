@@ -348,7 +348,6 @@ class mcollective (
   $protocol               = params_lookup( 'protocol' )
   ) inherits mcollective::params {
 
-  $bool_install_dependencies =any2bool($install_dependencies )
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
   $bool_absent=any2bool($absent)

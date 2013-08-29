@@ -20,7 +20,7 @@ class mcollective::plugins {
   }
 
   mcollective::plugin { 'package':
-  } 
+  }
 
   mcollective::plugin { 'puppet':
   }
