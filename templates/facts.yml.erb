@@ -1,1 +1,11 @@
-<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|last_run|manage_file_content|classvars|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>
+---
+<%
+        mco_facts = scope.to_hash.reject do |k,v|
+                k.to_s =~ /(uptime|timestamp|free|require|last_run|path)/
+        end
+        mco_yaml = String.new
+        mco_facts.each_key.sort.each do |fact|
+                mco_yaml << " #{fact}: \"#{mco_facts[fact].to_s.gsub('"', '\"')}\"\n"
+        end
+-%>
+<%= mco_yaml -%> 
