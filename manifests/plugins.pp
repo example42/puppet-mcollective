@@ -1,3 +1,7 @@
+# Class: mcollective::plugins
+#
+# This class installs mcollective plugins as packages
+#
 class mcollective::plugins {
 
   include mcollective
