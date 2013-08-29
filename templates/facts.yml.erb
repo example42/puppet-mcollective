@@ -1,7 +1,8 @@
 ---
 <%
+        mco_filter = scope.lookupvar('mcollective::filter_factsyml')
         mco_facts = scope.to_hash.reject do |k,v|
-                k.to_s =~ /(uptime|timestamp|free|require|last_run|path)/
+                k.to_s =~ /#{mco_filter}/
         end
         mco_yaml = String.new
         mco_facts.each_key.sort.each do |fact|
