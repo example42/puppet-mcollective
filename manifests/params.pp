@@ -36,6 +36,8 @@ class mcollective::params {
     default => '/etc/mcollective/client.cfg',
   }
 
+  $template_factsyml       = 'mcollective/facts.yml.erb'
+
   $template_client = ''
   $template_stomp_server = $::operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/ => 'mcollective/ubuntu_activemq.xml.erb',

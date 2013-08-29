@@ -7,7 +7,7 @@
 #
 # Module specific parameters
 # [*install_dependencies*]
-#   If dependencies from other Example42 modules are used. 
+#   If dependencies from other Example42 modules are used.
 #   Note that these dependencies are needed for an out of the box
 #   setup of the module, but you might want to provide them with
 #   other modules or functions. Default: true.
@@ -73,6 +73,9 @@
 #
 # [*daemonize*]
 #   Daemonize option. Default defined according to OS
+#
+# [*template_factsyml*]
+#   Sets the path to the template to use as facts yml
 #
 # Standard class parameters
 # Define the general class behaviour and customizations
@@ -293,6 +296,7 @@ class mcollective (
   $package_client       = params_lookup( 'package_client' ),
   $config_file_client   = params_lookup( 'config_file_client' ),
   $template_client      = params_lookup( 'template_client' ),
+  $template_factsyml     = params_lookup('template_factsyml'),
   $template_stomp_server = params_lookup( 'template_stomp_server' ),
   $daemonize            = params_lookup( 'daemonize' ),
   $my_class             = params_lookup( 'my_class' ),
@@ -585,10 +589,11 @@ class mcollective (
     mode     => '0400',
     owner    => 'root',
     group    => 'root',
+    backup   => false,
     require  => Package[$mcollective::package],
-    loglevel => debug,  # this is needed to avoid it being logged and reported on every run
+    loglevel => debug, # this is needed to avoid it being logged and reported on every run
     # avoid including highly-dynamic facts as they will cause unnecessary template writes
-    content  => inline_template('<%= scope.to_hash.reject { |k,v| k.to_s =~ /(uptime.*|last_run|manage_file_content|classvars|path|timestamp|free|.*password.*|.*psk.*|.*key)/ }.to_yaml %>'),
+    content  => template($mcollective::template_factsyml),
   }
 
 }
