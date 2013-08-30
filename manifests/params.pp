@@ -15,7 +15,8 @@
 class mcollective::params {
 
   ### Class specific parameters
-  $install_dependencies = true
+  $dependencies_class = 'mcollective::dependencies'
+
   $stomp_host = 'localhost'
   $stomp_port = '61613'
   $stomp_user = 'mcollective'
@@ -37,6 +38,7 @@ class mcollective::params {
   }
 
   $template_factsyml       = 'mcollective/facts.yml.erb'
+  $filter_factsyml       = '(uptime.*|last_run|manage_file_content|classvars|path|timestamp|free|.*password.*|.*psk.*|.*key)'
 
   $template_client = ''
   $template_stomp_server = $::operatingsystem ? {

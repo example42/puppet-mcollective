@@ -1,3 +1,7 @@
+# Class: mcollective::plugins
+#
+# This class installs mcollective plugins as packages
+#
 class mcollective::plugins {
 
   include mcollective
@@ -20,7 +24,7 @@ class mcollective::plugins {
   }
 
   mcollective::plugin { 'package':
-  } 
+  }
 
   mcollective::plugin { 'puppet':
   }

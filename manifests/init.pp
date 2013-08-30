@@ -6,12 +6,13 @@
 # == Parameters
 #
 # Module specific parameters
-# [*install_dependencies*]
-#   If dependencies from other Example42 modules are used.
-#   Note that these dependencies are needed for an out of the box
-#   setup of the module, but you might want to provide them with
-#   other modules or functions. Default: true.
-#   Set to false if these dependencies interphere with your modules.
+# [*dependencies_class*]
+#   The name of the class that installs dependencies and prerequisite
+#   resources needed by this module.
+#   Default is $mcollective::dependencies which uses Example42 modules.
+#   Set to '' false to not install any dependency (you must provide what's
+#   defined in mcollective/manifests/dependencies.pp in some way).
+#   Set directy the name of a custom class to manage there the dependencies
 #
 # [*stomp_host*]
 #   Address or hostname of the stomp server (Active/RabbitMQ server)
@@ -77,8 +78,11 @@
 # [*template_factsyml*]
 #   Sets the path to the template to use as facts yml
 #
+# [*filter_factsyml*]
+#   Define the filter to use for the default template of the facts yml
+#
+#
 # Standard class parameters
-# Define the general class behaviour and customizations
 #
 # [*my_class*]
 #   Name of a custom class to autoload to manage module's customizations
@@ -282,68 +286,68 @@
 #   Alessandro Franceschi <al@lab42.it/>
 #
 class mcollective (
-  $install_dependencies = params_lookup( 'install_dependencies' ),
-  $stomp_host           = params_lookup( 'stomp_host' ),
-  $stomp_port           = params_lookup( 'stomp_port' ),
-  $stomp_user           = params_lookup( 'stomp_user' ),
-  $stomp_password       = params_lookup( 'stomp_password' ),
-  $stomp_admin          = params_lookup( 'stomp_admin' ),
-  $stomp_admin_password = params_lookup( 'stomp_admin_password' ),
-  $install_client       = params_lookup( 'install_client' ),
-  $install_stomp_server = params_lookup( 'install_stomp_server' ),
-  $install_plugins      = params_lookup( 'install_plugins' ),
-  $psk                  = params_lookup( 'psk' ),
-  $package_client       = params_lookup( 'package_client' ),
-  $config_file_client   = params_lookup( 'config_file_client' ),
-  $template_client      = params_lookup( 'template_client' ),
-  $template_factsyml     = params_lookup('template_factsyml'),
-  $template_stomp_server = params_lookup( 'template_stomp_server' ),
-  $daemonize            = params_lookup( 'daemonize' ),
-  $my_class             = params_lookup( 'my_class' ),
-  $source               = params_lookup( 'source' ),
-  $source_dir           = params_lookup( 'source_dir' ),
-  $source_dir_purge     = params_lookup( 'source_dir_purge' ),
-  $template             = params_lookup( 'template' ),
-  $service_autorestart  = params_lookup( 'service_autorestart' , 'global' ),
-  $options              = params_lookup( 'options' ),
-  $version              = params_lookup( 'version' ),
-  $absent               = params_lookup( 'absent' ),
-  $disable              = params_lookup( 'disable' ),
-  $disableboot          = params_lookup( 'disableboot' ),
-  $monitor              = params_lookup( 'monitor' , 'global' ),
-  $monitor_tool         = params_lookup( 'monitor_tool' , 'global' ),
-  $monitor_target       = params_lookup( 'monitor_target' , 'global' ),
-  $monitor_config_hash  = params_lookup( 'monitor_config_hash' ),
-  $puppi                = params_lookup( 'puppi' , 'global' ),
-  $puppi_helper         = params_lookup( 'puppi_helper' , 'global' ),
-  $firewall             = params_lookup( 'firewall' , 'global' ),
-  $firewall_tool        = params_lookup( 'firewall_tool' , 'global' ),
-  $firewall_src         = params_lookup( 'firewall_src' , 'global' ),
-  $firewall_dst         = params_lookup( 'firewall_dst' , 'global' ),
-  $debug                = params_lookup( 'debug' , 'global' ),
-  $audit_only           = params_lookup( 'audit_only' , 'global' ),
-  $package              = params_lookup( 'package' ),
-  $package_dependencies = params_lookup( 'package_dependencies' ),
-  $service              = params_lookup( 'service' ),
-  $service_status       = params_lookup( 'service_status' ),
-  $process              = params_lookup( 'process' ),
-  $process_args         = params_lookup( 'process_args' ),
-  $process_user         = params_lookup( 'process_user' ),
-  $config_dir           = params_lookup( 'config_dir' ),
-  $config_file          = params_lookup( 'config_file' ),
-  $config_file_mode     = params_lookup( 'config_file_mode' ),
-  $config_file_owner    = params_lookup( 'config_file_owner' ),
-  $config_file_group    = params_lookup( 'config_file_group' ),
-  $config_file_init     = params_lookup( 'config_file_init' ),
-  $pid_file             = params_lookup( 'pid_file' ),
-  $data_dir             = params_lookup( 'data_dir' ),
-  $log_dir              = params_lookup( 'log_dir' ),
-  $log_file             = params_lookup( 'log_file' ),
-  $port                 = params_lookup( 'port' ),
-  $protocol             = params_lookup( 'protocol' )
+  $dependencies_class     = params_lookup( 'dependencies_class' ),
+  $stomp_host             = params_lookup( 'stomp_host' ),
+  $stomp_port             = params_lookup( 'stomp_port' ),
+  $stomp_user             = params_lookup( 'stomp_user' ),
+  $stomp_password         = params_lookup( 'stomp_password' ),
+  $stomp_admin            = params_lookup( 'stomp_admin' ),
+  $stomp_admin_password   = params_lookup( 'stomp_admin_password' ),
+  $install_client         = params_lookup( 'install_client' ),
+  $install_stomp_server   = params_lookup( 'install_stomp_server' ),
+  $install_plugins        = params_lookup( 'install_plugins' ),
+  $psk                    = params_lookup( 'psk' ),
+  $package_client         = params_lookup( 'package_client' ),
+  $config_file_client     = params_lookup( 'config_file_client' ),
+  $template_client        = params_lookup( 'template_client' ),
+  $template_factsyml      = params_lookup( 'template_factsyml' ),
+  $filter_factsyml        = params_lookup( 'filter_factsyml' ),
+  $template_stomp_server  = params_lookup( 'template_stomp_server' ),
+  $daemonize              = params_lookup( 'daemonize' ),
+  $my_class               = params_lookup( 'my_class' ),
+  $source                 = params_lookup( 'source' ),
+  $source_dir             = params_lookup( 'source_dir' ),
+  $source_dir_purge       = params_lookup( 'source_dir_purge' ),
+  $template               = params_lookup( 'template' ),
+  $service_autorestart    = params_lookup( 'service_autorestart' , 'global' ),
+  $options                = params_lookup( 'options' ),
+  $version                = params_lookup( 'version' ),
+  $absent                 = params_lookup( 'absent' ),
+  $disable                = params_lookup( 'disable' ),
+  $disableboot            = params_lookup( 'disableboot' ),
+  $monitor                = params_lookup( 'monitor' , 'global' ),
+  $monitor_tool           = params_lookup( 'monitor_tool' , 'global' ),
+  $monitor_target         = params_lookup( 'monitor_target' , 'global' ),
+  $monitor_config_hash    = params_lookup( 'monitor_config_hash' ),
+  $puppi                  = params_lookup( 'puppi' , 'global' ),
+  $puppi_helper           = params_lookup( 'puppi_helper' , 'global' ),
+  $firewall               = params_lookup( 'firewall' , 'global' ),
+  $firewall_tool          = params_lookup( 'firewall_tool' , 'global' ),
+  $firewall_src           = params_lookup( 'firewall_src' , 'global' ),
+  $firewall_dst           = params_lookup( 'firewall_dst' , 'global' ),
+  $debug                  = params_lookup( 'debug' , 'global' ),
+  $audit_only             = params_lookup( 'audit_only' , 'global' ),
+  $package                = params_lookup( 'package' ),
+  $package_dependencies   = params_lookup( 'package_dependencies' ),
+  $service                = params_lookup( 'service' ),
+  $service_status         = params_lookup( 'service_status' ),
+  $process                = params_lookup( 'process' ),
+  $process_args           = params_lookup( 'process_args' ),
+  $process_user           = params_lookup( 'process_user' ),
+  $config_dir             = params_lookup( 'config_dir' ),
+  $config_file            = params_lookup( 'config_file' ),
+  $config_file_mode       = params_lookup( 'config_file_mode' ),
+  $config_file_owner      = params_lookup( 'config_file_owner' ),
+  $config_file_group      = params_lookup( 'config_file_group' ),
+  $config_file_init       = params_lookup( 'config_file_init' ),
+  $pid_file               = params_lookup( 'pid_file' ),
+  $data_dir               = params_lookup( 'data_dir' ),
+  $log_dir                = params_lookup( 'log_dir' ),
+  $log_file               = params_lookup( 'log_file' ),
+  $port                   = params_lookup( 'port' ),
+  $protocol               = params_lookup( 'protocol' )
   ) inherits mcollective::params {
 
-  $bool_install_dependencies =any2bool($install_dependencies )
   $bool_source_dir_purge=any2bool($source_dir_purge)
   $bool_service_autorestart=any2bool($service_autorestart)
   $bool_absent=any2bool($absent)
@@ -514,8 +518,8 @@ class mcollective (
   }
 
   ### Include Mcollective Plugin Dependencies
-  if $mcollective::bool_install_dependencies == true {
-    include mcollective::dependencies
+  if $mcollective::dependency_class {
+    include $mcollective::dependency_class
   }
 
   ### Provide puppi data, if enabled ( puppi => true )
