@@ -33,6 +33,10 @@ class mcollective::params {
     default => 'mcollective-client',
   }
 
+  $package_provider   = $::operatingsystem ? {
+    default => undef,
+  }
+
   $config_file_client = $::operatingsystem ? {
     default => '/etc/mcollective/client.cfg',
   }

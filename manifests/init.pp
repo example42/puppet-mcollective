@@ -81,6 +81,9 @@
 # [*filter_factsyml*]
 #   Define the filter to use for the default template of the facts yml
 #
+# [*package_provider*]
+#   The Provider to use for the package resource
+#
 #
 # Standard class parameters
 #
@@ -302,6 +305,7 @@ class mcollective (
   $template_client        = params_lookup( 'template_client' ),
   $template_factsyml      = params_lookup( 'template_factsyml' ),
   $filter_factsyml        = params_lookup( 'filter_factsyml' ),
+  $package_provider       = params_lookup( 'package_provider' ),
   $template_stomp_server  = params_lookup( 'template_stomp_server' ),
   $daemonize              = params_lookup( 'daemonize' ),
   $my_class               = params_lookup( 'my_class' ),
@@ -455,7 +459,8 @@ class mcollective (
   }
 
   package { $mcollective::package:
-    ensure => $mcollective::manage_package,
+    provider => $mcollective::package_provider,
+    ensure   => $mcollective::manage_package,
   }
 
   service { 'mcollective':
