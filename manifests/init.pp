@@ -459,8 +459,8 @@ class mcollective (
   }
 
   package { $mcollective::package:
-    provider => $mcollective::package_provider,
     ensure   => $mcollective::manage_package,
+    provider => $mcollective::package_provider,
   }
 
   service { 'mcollective':
