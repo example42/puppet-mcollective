@@ -2,7 +2,7 @@ class mcollective::plugins {
 
   include mcollective
 
-  # PuppetLabs Plugins
+  # PuppetLabs Plugins
   mcollective::plugin { 'process':
     ensure         => $mcollective::manage_package,
     install_client => $mcollective::install_client,
