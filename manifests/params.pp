@@ -77,10 +77,12 @@ class mcollective::params {
   }
 
   $process = $::operatingsystem ? {
-    default => 'ruby',
+    /(?i:Debian|Ubuntu|Mint)/ => 'mcollectived',
+    default                   => 'ruby',
   }
 
   $process_args = $::operatingsystem ? {
+    /(?i:Debian|Ubuntu|Mint)/ => '',
     default => 'mcollectived',
   }
 
