@@ -29,6 +29,12 @@
 # [*stomp_password*]
 #   The password used for simple authentication
 #
+# [*client_stomp_user*]
+#   If set will define a specific per-client user (for example admin instead of mco)
+# 
+# [*client_stomp_password*]
+#   If set will define a specific per-client password
+#
 # [*stomp_admin*]
 #   The user configured on Mcollective client used to control
 #   the mcollective infrastructure
@@ -294,6 +300,8 @@ class mcollective (
   $stomp_port             = params_lookup( 'stomp_port' ),
   $stomp_user             = params_lookup( 'stomp_user' ),
   $stomp_password         = params_lookup( 'stomp_password' ),
+  $client_stomp_user      = params_lookup( 'stomp_user' ),
+  $client_stomp_password  = params_lookup( 'stomp_password' ),
   $stomp_admin            = params_lookup( 'stomp_admin' ),
   $stomp_admin_password   = params_lookup( 'stomp_admin_password' ),
   $install_client         = params_lookup( 'install_client' ),
