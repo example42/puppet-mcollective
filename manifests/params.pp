@@ -63,7 +63,7 @@ class mcollective::params {
   }
 
   $package_dependencies = $::operatingsystem ? {
-    /(?i:Debian|Ubuntu|Mint)/ => 'libstomp-ruby',
+    /(?i:Debian|Ubuntu|Mint)/ => 'ruby-stomp',
     default                   => undef,
   }
 
