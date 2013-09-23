@@ -83,7 +83,7 @@ class mcollective::params {
 
   $process_args = $::operatingsystem ? {
     /(?i:Debian|Ubuntu|Mint)/ => '',
-    default => 'mcollectived',
+    default                   => 'mcollectived',
   }
 
   $process_user = $::operatingsystem ? {
