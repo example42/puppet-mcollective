@@ -523,8 +523,8 @@ class mcollective (
   }
 
   ### Include Mcollective Plugin Dependencies
-  if $mcollective::dependency_class {
-    include $mcollective::dependency_class
+  if $mcollective::dependencies_class {
+    include $mcollective::dependencies_class
   }
 
   ### Provide puppi data, if enabled ( puppi => true )
