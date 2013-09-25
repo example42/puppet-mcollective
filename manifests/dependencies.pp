@@ -10,7 +10,7 @@
 #
 # This class is not intended to be used directly.
 # It's automatically included by mcollective with the parameter
-# dependency_class
+# dependencies_class
 # Note: This class may contain resources available on the
 # Example42 modules set
 #
