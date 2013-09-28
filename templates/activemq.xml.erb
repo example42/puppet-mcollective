@@ -103,9 +103,12 @@
                 <authorizationEntries>
                   <authorizationEntry queue=">" write="admins" read="admins" admin="admins" />
                   <authorizationEntry topic=">" write="admins" read="admins" admin="admins" />
+                  <authorizationEntry queue="mcollective.>" write="admins" read="admins" admin="admins" />
                   <authorizationEntry topic="mcollective.>" write="admins" read="admins" admin="admins" />
-                  <authorizationEntry topic="mcollective.>" write="admins" read="admins" admin="admins" />
-                  <authorizationEntry topic="mcollective.*.reply" write="mcollective" admin="mcollective" />
+                  <authorizationEntry queue="mcollective.nodes" read="mcollective" admin="mcollective" />
+                  <authorizationEntry queue="mcollective.reply.>" write="mcollective" admin="mcollective" />
+                  <authorizationEntry topic="mcollective.*.agent" read="mcollective" admin="mcollective" />
+                  <authorizationEntry topic="mcollective.registration.agent" write="mcollective" read="mcollective" admin="mcollective" />
                   <authorizationEntry topic="mcollective.registration.command" write="mcollective" read="mcollective" admin="mcollective" />
                   <authorizationEntry topic="mcollective.*.command" read="mcollective" admin="mcollective" />
                   <authorizationEntry topic="ActiveMQ.Advisory.>" read="everyone" write="everyone" admin="everyone"/>
