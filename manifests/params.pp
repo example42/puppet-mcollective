@@ -21,6 +21,8 @@ class mcollective::params {
   $stomp_port = '61613'
   $stomp_user = 'mcollective'
   $stomp_password = 'secret'
+  $client_stomp_user = 'mco'
+  $client_stomp_password = 'mco123'
   $stomp_admin = 'mcollective_admin'
   $stomp_admin_password = 'secret!'
 
