@@ -31,7 +31,7 @@
 #
 # [*client_stomp_user*]
 #   If set will define a specific per-client user (for example admin instead of mco)
-# 
+#
 # [*client_stomp_password*]
 #   If set will define a specific per-client password
 #
