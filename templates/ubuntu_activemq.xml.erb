@@ -28,6 +28,7 @@
           <authenticationUser username="${activemq.username}" password="${activemq.password}" groups="admins,everyone"/>
           <authenticationUser username="<%= scope.lookupvar('mcollective::stomp_user') %>" password="<%= scope.lookupvar('mcollective::stomp_password') %>" groups="mcollective,everyone"/>
           <authenticationUser username="<%= scope.lookupvar('mcollective::stomp_admin') %>" password="<%= scope.lookupvar('mcollective::stomp_admin_password') %>" groups="mcollective,admins,everyone"/>
+          <authenticationUser username="<%= scope.lookupvar('mcollective::client_stomp_user') %>" password="<%= scope.lookupvar('mcollective::client_stomp_password') %>" groups="mcollective,admins,everyone"/>
         </users>
       </simpleAuthenticationPlugin>
 
