@@ -28,6 +28,7 @@
           <authenticationUser username="${activemq.username}" password="${activemq.password}" groups="admins,everyone"/>
           <authenticationUser username="<%= scope.lookupvar('mcollective::stomp_user') %>" password="<%= scope.lookupvar('mcollective::stomp_password') %>" groups="mcollective,everyone"/>
           <authenticationUser username="<%= scope.lookupvar('mcollective::stomp_admin') %>" password="<%= scope.lookupvar('mcollective::stomp_admin_password') %>" groups="mcollective,admins,everyone"/>
+          <authenticationUser username="<%= scope.lookupvar('mcollective::client_stomp_user') %>" password="<%= scope.lookupvar('mcollective::client_stomp_password') %>" groups="mcollective,admins,everyone"/>
         </users>
       </simpleAuthenticationPlugin>
 
@@ -40,6 +41,8 @@
               <authorizationEntry topic="mcollective.>" write="admins" read="admins" admin="admins" />
               <authorizationEntry topic="mcollective.>" write="admins" read="admins" admin="admins" />
               <authorizationEntry topic="mcollective.*.reply" write="mcollective" admin="mcollective" />
+              <authorizationEntry queue="mcollective.reply.>" write="mcollective" admin="mcollective" />
+              <authorizationEntry topic="mcollective.*.agent" read="mcollective" admin="mcollective" />
               <authorizationEntry topic="mcollective.registration.command" write="mcollective" read="mcollective" admin="mcollective" />
               <authorizationEntry topic="mcollective.*.command" read="mcollective" admin="mcollective" />
               <authorizationEntry topic="ActiveMQ.Advisory.>" read="everyone" write="everyone" admin="everyone"/>
