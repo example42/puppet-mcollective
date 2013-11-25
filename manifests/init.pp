@@ -61,8 +61,8 @@
 # [*psk*]
 #   The Pre Shared Key configured on Mcollective clients and servers
 #
-# [*client_identity*]
-#   The identity of mcollective client. Defaults to hostname.
+# [*server_identity*]
+#   The identity of mcollective server. Defaults to hostname.
 #
 # [*package_client*]
 #   The name of mcollective client package
@@ -311,7 +311,7 @@ class mcollective (
   $install_stomp_server   = params_lookup( 'install_stomp_server' ),
   $install_plugins        = params_lookup( 'install_plugins' ),
   $psk                    = params_lookup( 'psk' ),
-  $client_identity        = params_lookup( 'client_identity' ),
+  $server_identity        = params_lookup( 'server_identity' ),
   $package_client         = params_lookup( 'package_client' ),
   $config_file_client     = params_lookup( 'config_file_client' ),
   $template_client        = params_lookup( 'template_client' ),
