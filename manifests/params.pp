@@ -31,6 +31,8 @@ class mcollective::params {
   $install_plugins = true
   $psk = 'th1s_1s_someTHING_diff1cult2guess!butNOTsoSAFE!!'
 
+  $server_identity = $::hostname
+
   $package_client = $::operatingsystem ? {
     default => 'mcollective-client',
   }

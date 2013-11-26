@@ -9,6 +9,7 @@ logger_type = console
 loglevel = warn
 daemonize = 1
 direct_addressing = 1
+identity = <%= scope.lookupvar('mcollective::server_identity') %>
 
 # Plugins
 securityprovider = psk

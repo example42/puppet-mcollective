@@ -10,6 +10,7 @@ max_log_size = 2097152
 loglevel = info
 daemonize = <%= scope.lookupvar('mcollective::daemonize') %>
 direct_addressing = 1
+identity = <%= scope.lookupvar('mcollective::server_identity') %>
 
 # Plugins
 securityprovider = psk
