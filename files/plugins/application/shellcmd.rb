@@ -1,5 +1,3 @@
-# GPLv2 license
-# https://github.com/thesilentpenguin/shellcmd-agent/blob/master/COPYING
 module MCollective
   class Application::Shellcmd < Application
     description "Run shell commands"
