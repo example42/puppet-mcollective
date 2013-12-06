@@ -23,6 +23,9 @@ plugin.activemq.pool.1.port = <%= scope.lookupvar('mcollective::stomp_port') %>
 plugin.activemq.pool.1.user = <%= scope.lookupvar('mcollective::stomp_user') %>
 plugin.activemq.pool.1.password = <%= scope.lookupvar('mcollective::stomp_password') %>
 
+# Registration
+registerinterval = <%= scope.lookupvar('mcollective::register_interval') %>
+
 # Facts
 factsource = yaml
 plugin.yaml = /etc/mcollective/facts.yaml
