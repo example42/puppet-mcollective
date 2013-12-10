@@ -90,10 +90,9 @@ Currently only psk security is supported. Client and Servers have different user
 
 ## USAGE - The shellcmd plugin
 
-The bundled [shellcmd plugin](https://github.com/slivarez/mcollective-shellcmd-agent)
-allows to run shell commands on servers. It is not deployed by default.
-It requires the ruby open4 library that won't be installed by this
-module.
+The bundled [shellcmd plugin](https://github.com/slivarez/mcollective-shellcmd-agent) allows to run shell commands on servers.
+It is not deployed by default.
+It requires the ruby open4 library that won't be installed by this module.
 
 * Ruby open4 dependency installation example
 
@@ -130,10 +129,10 @@ module.
         mco shellcmd 'ls -l /etc/network/if-up.d' -F 'osfamily=Debian'
 
 ## USAGE - Overrides and Customizations
-* Use custom sources for main config file 
+* Use custom sources for main config file
 
         class { 'mcollective':
-          source => [ "puppet:///modules/lab42/mcollective/mcollective.conf-${hostname}" , "puppet:///modules/lab42/mcollective/mcollective.conf" ], 
+          source => [ "puppet:///modules/lab42/mcollective/mcollective.conf-${hostname}" , "puppet:///modules/lab42/mcollective/mcollective.conf" ],
         }
 
 
@@ -144,7 +143,7 @@ module.
           source_dir_purge => false, # Set to true to purge any existing file not present in $source_dir
         }
 
-* Use custom template for main config file. Note that template and source arguments are alternative. 
+* Use custom template for main config file. Note that template and source arguments are alternative.
 
         class { 'mcollective':
           template => 'example42/mcollective/mcollective.conf.erb',
@@ -157,18 +156,18 @@ module.
         }
 
 
-## USAGE - Example42 extensions management 
+## USAGE - Example42 extensions management
 * Activate puppi (recommended, but disabled by default)
 
         class { 'mcollective':
           puppi    => true,
         }
 
-* Activate puppi and use a custom puppi_helper template (to be provided separately with a puppi::helper define ) to customize the output of puppi commands 
+* Activate puppi and use a custom puppi_helper template (to be provided separately with a puppi::helper define ) to customize the output of puppi commands
 
         class { 'mcollective':
           puppi        => true,
-          puppi_helper => 'myhelper', 
+          puppi_helper => 'myhelper',
         }
 
 * Activate automatic monitoring (recommended, but disabled by default). This option requires the usage of Example42 monitor and relevant monitor tools modules
@@ -180,7 +179,7 @@ module.
 
 * Activate automatic firewalling. This option requires the usage of Example42 firewall and relevant firewall tools modules
 
-        class { 'mcollective':       
+        class { 'mcollective':
           firewall      => true,
           firewall_tool => 'iptables',
           firewall_src  => '10.42.0.0/24',
