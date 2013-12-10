@@ -44,6 +44,15 @@
 # [*stomp_admin_password*]
 #   The password for the stomp_admin_user
 #
+# [*memory_usage*]
+#   ActiveMQ memoryUsage configuration
+#
+# [*store_usage*]
+#   ActiveMQ storeUsage configuration
+#
+# [*temp_usage*]
+#   ActiveMQ tempUsage configuration
+#
 # [*install_client*]
 #   Set to true if you want to install mcollective client
 #   (With mcollective client you manage the whole mcollective
@@ -307,6 +316,9 @@ class mcollective (
   $client_stomp_password  = params_lookup( 'client_stomp_password' ),
   $stomp_admin            = params_lookup( 'stomp_admin' ),
   $stomp_admin_password   = params_lookup( 'stomp_admin_password' ),
+  $memory_usage           = params_lookup( 'memory_usage' ),
+  $store_usage            = params_lookup( 'store_usage' ),
+  $temp_usage             = params_lookup( 'temp_usage' ),
   $install_client         = params_lookup( 'install_client' ),
   $install_stomp_server   = params_lookup( 'install_stomp_server' ),
   $install_plugins        = params_lookup( 'install_plugins' ),
