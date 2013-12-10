@@ -129,13 +129,13 @@
         <systemUsage>
             <systemUsage>
                 <memoryUsage>
-                    <memoryUsage limit="100 mb"/>
+                    <memoryUsage limit="<%= scope.lookupvar('mcollective::memory_usage') %>"/>
                 </memoryUsage>
                 <storeUsage>
-                    <storeUsage limit="1 gb"/>
+                    <storeUsage limit="<%= scope.lookupvar('mcollective::store_usage') %>"/>
                 </storeUsage>
                 <tempUsage>
-                    <tempUsage limit="100 mb"/>
+                    <tempUsage limit="<%= scope.lookupvar('mcollective::temp_usage') %>"/>
                 </tempUsage>
             </systemUsage>
         </systemUsage>
