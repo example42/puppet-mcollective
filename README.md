@@ -88,6 +88,46 @@ Currently only psk security is supported. Client and Servers have different user
           audit_only => true
         }
 
+## USAGE - The shellcmd plugin
+
+The bundled [shellcmd plugin](https://github.com/slivarez/mcollective-shellcmd-agent)
+allows to run shell commands on servers. It is not deployed by default.
+It requires the ruby open4 library that won't be installed by this
+module.
+
+* Ruby open4 dependency installation example
+
+        package { 'ruby-open4':
+          ensure   => 'installed',
+          name     => $::osfamily ? {
+            'RedHat' => 'open4',
+            default  => 'ruby-open4',
+          },
+          provider => $::osfamily ? {
+            'RedHat' => 'gem',
+            default  => undef,
+          },
+        }
+
+* Shellcmd plugin deployment example
+
+        mcollective::plugin { 'shellcmd':
+          application    => $::role ? {
+            mco     => 'shellcmd.rb',
+            default => undef,
+          },
+          install_client => $::role ? {
+            mco     => true,
+            default => false,
+          },
+          install_mode   => '',
+          require        => Package['ruby-open4'],
+        }
+
+* Usage example
+
+        mco shellcmd 'echo i execute therefore i am'
+        mco shellcmd 'ls -l /etc/network/if-up.d' -F 'osfamily=Debian'
 
 ## USAGE - Overrides and Customizations
 * Use custom sources for main config file 
