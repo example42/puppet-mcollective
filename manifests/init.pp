@@ -73,6 +73,10 @@
 # [*server_identity*]
 #   The identity of mcollective server. Defaults to hostname.
 #
+# [*register_interval*]
+#   How long (in seconds) to wait between registration messages.
+#   Default to 0, disabling registration.
+#
 # [*package_client*]
 #   The name of mcollective client package
 #
@@ -324,6 +328,7 @@ class mcollective (
   $install_plugins        = params_lookup( 'install_plugins' ),
   $psk                    = params_lookup( 'psk' ),
   $server_identity        = params_lookup( 'server_identity' ),
+  $register_interval      = params_lookup( 'register_interval' ),
   $package_client         = params_lookup( 'package_client' ),
   $config_file_client     = params_lookup( 'config_file_client' ),
   $template_client        = params_lookup( 'template_client' ),
