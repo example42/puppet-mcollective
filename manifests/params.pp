@@ -37,6 +37,8 @@ class mcollective::params {
 
   $server_identity = $::fqdn
 
+  $register_interval = 0
+
   $package_client = $::operatingsystem ? {
     default => 'mcollective-client',
   }
