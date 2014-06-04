@@ -1,6 +1,5 @@
 # File Managed by Puppet
 
-topicprefix = /topic/
 main_collective = mcollective
 collectives = mcollective
 libdir = <%= scope.lookupvar('mcollective::data_dir') %>
@@ -21,6 +20,7 @@ plugin.activemq.pool.1.host = <%= scope.lookupvar('mcollective::stomp_host') %>
 plugin.activemq.pool.1.port = <%= scope.lookupvar('mcollective::stomp_port') %>
 plugin.activemq.pool.1.user = <%= scope.lookupvar('mcollective::client_stomp_user') %>
 plugin.activemq.pool.1.password = <%= scope.lookupvar('mcollective::client_stomp_password') %>
+plugin.activemq.heartbeat_interval = 30
 
 # Facts
 factsource = yaml
