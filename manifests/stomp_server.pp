@@ -16,7 +16,7 @@ class mcollective::stomp_server inherits mcollective {
     ubuntu,debian,mint: {
       class { 'activemq':
         install              => 'source',
-        version              => '5.9.0',
+        version              => '5.9.1',
         template             => $mcollective::template_stomp_server,
         install_dependencies => $mcollective::install_dependencies,
       }
