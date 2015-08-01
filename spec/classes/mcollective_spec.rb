@@ -6,7 +6,10 @@ describe 'mcollective' do
   let(:node) { 'rspec.example42.com' }
   let(:facts) { {
       :ipaddress => '10.42.42.42',
-      :concat_basedir => '/dne'
+      :concat_basedir => '/dne',
+      :operatingsystemrelease => '6.6',
+      :operatingsystem => 'CentOS',
+      :osfmaily => 'RedHat'
   } }
 
   describe 'Test standard installation' do
