@@ -26,7 +26,7 @@ class mcollective::dependencies {
     }
   }
   if !defined(Package[net-ping]) {
-    if $::rubyversion >= '1.9.1' {
+    if versioncmp($::rubyversion, '1.9.0') > 0 {
       package { 'net-ping':
         ensure    => $mcollective::manage_package,
         provider  => gem,

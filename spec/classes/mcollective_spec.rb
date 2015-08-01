@@ -4,7 +4,10 @@ describe 'mcollective' do
 
   let(:title) { 'mcollective' }
   let(:node) { 'rspec.example42.com' }
-  let(:facts) { { :ipaddress => '10.42.42.42' } }
+  let(:facts) { {
+      :ipaddress => '10.42.42.42',
+      :concat_basedir => '/dne'
+  } }
 
   describe 'Test standard installation' do
     it { should contain_package('mcollective').with_ensure('present') }
