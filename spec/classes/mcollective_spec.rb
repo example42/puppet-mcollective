@@ -8,8 +8,9 @@ describe 'mcollective' do
       :ipaddress => '10.42.42.42',
       :concat_basedir => '/dne',
       :operatingsystemrelease => '6.6',
-      :operatingsystem => 'CentOS',
-      :osfmaily => 'RedHat'
+      :operatingsystem => 'Debian',
+      :osfamily => 'Debian',
+      :lsbdistcodename => 'Jessie'
   } }
 
   describe 'Test standard installation' do

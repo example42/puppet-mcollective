@@ -6,6 +6,8 @@ fixtures:
     "iptables": "git://github.com/example42/puppet-iptables.git"
     "concat": "git://github.com/puppetlabs/puppetlabs-concat.git"
     "stdlib": "git://github.com/puppetlabs/puppetlabs-stdlib.git"
+    "yum": "git://github.com/example42/puppet-yum.git"
+    "apt": "git://github.com/example42/puppet-apt.git"
   symlinks:
     "mcollective": "#{source_dir}"
 
