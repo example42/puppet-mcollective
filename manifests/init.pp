@@ -482,8 +482,8 @@ class mcollective (
   ### Managed resources
   if $mcollective::package_dependencies {
     package { $mcollective::package_dependencies:
-      ensure  => $mcollective::manage_package,
-      before  => Package[$mcollective::package]
+      ensure => $mcollective::manage_package,
+      before => Package[$mcollective::package]
     }
   }
 
@@ -493,12 +493,12 @@ class mcollective (
   }
 
   service { 'mcollective':
-    ensure     => $mcollective::manage_service_ensure,
-    name       => $mcollective::service,
-    enable     => $mcollective::manage_service_enable,
-    hasstatus  => $mcollective::service_status,
-    pattern    => $mcollective::process_args,
-    require    => Package[$mcollective::package],
+    ensure    => $mcollective::manage_service_ensure,
+    name      => $mcollective::service,
+    enable    => $mcollective::manage_service_enable,
+    hasstatus => $mcollective::service_status,
+    pattern   => $mcollective::process_args,
+    require   => Package[$mcollective::package],
   }
 
   file { 'mcollective.conf':
@@ -516,7 +516,7 @@ class mcollective (
   }
 
   # The whole mcollective configuration directory can be recursively overriden
-  if $mcollective::source_dir {
+  if $mcollective::source_dir and $mcollective::source_dir != '' {
     file { 'mcollective.dir':
       ensure  => directory,
       path    => $mcollective::config_dir,

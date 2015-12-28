@@ -20,25 +20,25 @@ class mcollective::dependencies {
 
   if !defined(Package[json]) {
     package { 'json':
-      ensure    => $mcollective::manage_package,
-      provider  => gem,
-      notify    => $mcollective::manage_service_autorestart
+      ensure   => $mcollective::manage_package,
+      provider => gem,
+      notify   => $mcollective::manage_service_autorestart
     }
   }
   if !defined(Package[net-ping]) {
     if versioncmp($::rubyversion, '1.9.0') > 0 {
       package { 'net-ping':
-        ensure    => $mcollective::manage_package,
-        provider  => gem,
-        notify    => $mcollective::manage_service_autorestart
+        ensure   => $mcollective::manage_package,
+        provider => gem,
+        notify   => $mcollective::manage_service_autorestart
       }
     }
   }
   if !defined(Package[sys-proctable]) {
     package { 'sys-proctable':
-      ensure    => $mcollective::manage_package,
-      provider  => gem,
-      notify    => $mcollective::manage_service_autorestart
+      ensure   => $mcollective::manage_package,
+      provider => gem,
+      notify   => $mcollective::manage_service_autorestart
     }
   }
 
